@@ -1,35 +1,41 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿package A_First_Tests;
 
-namespace SaneWebDriver_CSharp.A_First_Tests
-{
-    [TestFixture]
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.core.Is.is;
+
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+
     public class B_Async_solved_with_wait
     {
-        [Test]
+        @Test
         public void grid_appears_on_page_and_has_rows() 
         {
-            IWebDriver browser = new FirefoxDriver();
-            browser.Navigate().GoToUrl("http://demosite.com/KendoGrid.html");
+            WebDriver browser = new FirefoxDriver();
+            browser.get("http://demosite.com/KendoGrid.html");
             //browser.Navigate().GoToUrl("http://jhdemos.azurewebsites.net/KendoGrid.html");
 
-            IWebElement grid = browser.FindElement(By.Id("grid"));
-            Assert.IsNotNull(grid);
+            WebElement grid = browser.findElement(By.id("grid"));
+            assertNotNull(grid);
 
-            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath("//tbody/tr")));
-            IList<IWebElement> rows = browser.FindElements(By.XPath("//tbody/tr"));
+            WebDriverWait wait = new WebDriverWait(browser, 30);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
+            List<WebElement> rows = browser.findElements(By.xpath("//tbody/tr"));
             
-            Assert.IsNotEmpty(rows);
+            assertThat(rows.isEmpty(), is(false));
 
-            browser.Quit();
+            browser.quit();
         }
     }
-}

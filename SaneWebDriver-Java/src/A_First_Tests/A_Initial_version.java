@@ -1,34 +1,44 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿package A_First_Tests;
 
-namespace SaneWebDriver_CSharp.A_First_Tests
-{
-    [TestFixture]
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junit.framework.Assert;
+import static org.junit.matchers.JUnitMatchers.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.*;
+
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+    
     public class A_Initial_version
     {
-        [Test]
+        @Test
         public void grid_appears_on_page_and_has_rows()
         {
             // ARRANGE
-            IWebDriver browser = new FirefoxDriver();
-            browser.Navigate().GoToUrl("http://demosite.com/KendoGrid.html");
+            WebDriver browser = new FirefoxDriver();
+            browser.get("http://demosite.com/KendoGrid.html");
             //browser.Navigate().GoToUrl("http://jhdemos.azurewebsites.net/KendoGrid.html");
 
             // ACT
-            IWebElement grid = browser.FindElement(By.Id("grid"));
+            WebElement grid = browser.findElement(By.id("grid"));
             // ASSERT
-            Assert.IsNotNull(grid);
+            assertNotNull(grid);
 
-            IList<IWebElement> rows = browser.FindElements(By.XPath("//tbody/tr"));
-            Assert.IsNotEmpty(rows);
+            List<WebElement> rows = browser.findElements(By.xpath("//tbody/tr"));
+            assertThat(rows.isEmpty(), is(false));
 
-            browser.Quit();
+            browser.quit();
         }
     }
-}

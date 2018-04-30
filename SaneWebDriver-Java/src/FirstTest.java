@@ -9,7 +9,7 @@ class FirstTest {
 	@Test
 	void check_grid_loads() {
 		//create a Firefox thing
-		//start Firefox
+		WebDriver browser = new FirefoxDriver();
 		//go to the page
 		//see if the thing we want to check is on page
 		//stop Firefox
