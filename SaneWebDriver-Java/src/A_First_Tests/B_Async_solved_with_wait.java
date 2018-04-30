@@ -23,9 +23,10 @@ import org.junit.jupiter.api.Test;
         @Test
         public void grid_appears_on_page_and_has_rows() 
         {
+        	System.setProperty("webdriver.gecko.driver", "libs/geckodriver");
             WebDriver browser = new FirefoxDriver();
-            browser.get("http://demosite.com/KendoGrid.html");
-            //browser.Navigate().GoToUrl("http://jhdemos.azurewebsites.net/KendoGrid.html");
+            //browser.get("http://demosite.com/KendoGrid.html");
+            browser.get("http://jhdemos.azurewebsites.net/KendoGrid.html");
 
             WebElement grid = browser.findElement(By.id("grid"));
             assertNotNull(grid);

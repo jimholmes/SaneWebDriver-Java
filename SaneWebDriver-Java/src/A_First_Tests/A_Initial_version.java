@@ -1,21 +1,17 @@
 ﻿package A_First_Tests;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import junit.framework.Assert;
-import static org.junit.matchers.JUnitMatchers.*;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.*;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
