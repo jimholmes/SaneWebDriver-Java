@@ -1,34 +1,36 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿package C_Starting_To_Structure;
 
-namespace SaneWebDriver_CSharp.C_Starting_To_Structure
-{
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
+/* TestInstance(Lifecycle.PER_CLASS) enables use of
+ *   @BeforeClass on non-static methods.
+ *   See discussion on how JUnit handles test class lifecycle at
+ *   https://stackoverflow.com/questions/1052577/why-must-junits-fixturesetup-be-static 
+ */
 
     public class ContactGridPageObject
     {
-        public static string GRID_ID = "grid";
-        public static string CREATE_BTN_ID = "create_btn";
+        public static String GRID_ID = "grid";
+        public static String CREATE_BTN_ID = "create_btn";
 
-        public IWebElement GetContactGrid(IWebDriver browser)
+        public WebElement GetContactGrid(WebDriver browser)
         {
-            return browser.FindElement(By.Id(GRID_ID));
+            return browser.findElement(By.id(GRID_ID));
         }
 
-        public IWebElement GetCreateButton(IWebDriver browser)
+        public WebElement GetCreateButton(WebDriver browser)
         {
-            return browser.FindElement(By.Id(CREATE_BTN_ID));
+            return browser.findElement(By.id(CREATE_BTN_ID));
         }
 
-        public IWebElement GetGridRowById(IWebDriver browser, string rowId)
+        public WebElement GetGridRowById(WebDriver browser, String rowId)
         {
-            return browser.FindElement(By.Id(rowId));
+            return browser.findElement(By.id(rowId));
         }
 
         /*
@@ -37,26 +39,24 @@ namespace SaneWebDriver_CSharp.C_Starting_To_Structure
          *              48-Holmes
          * Ergo, we can use the CSS selector id$="Holmes" to match. Yay.
          */
-        public IWebElement GetGridRowByContactName(IWebDriver browser, string contactName)
+        public WebElement GetGridRowByContactName(WebDriver browser, String contactName)
         {
-            string selector = "tr[id$='" + contactName + "']";
-            return browser.FindElement(By.CssSelector(selector));
+            String selector = "tr[id$='" + contactName + "']";
+            return browser.findElement(By.cssSelector(selector));
         }
 
-        public IWebElement GetRowByRowTextContent (IWebDriver browser, string contentText)
+        public WebElement GetRowByRowTextContent (WebDriver browser, String contentText)
         {
-            string contentXpath = "//tbody/tr[contains(.," + contentText + ")]";
-            return browser.FindElement(By.XPath(contentXpath));
+            String contentxpath = "//tbody/tr[contains(.," + contentText + ")]";
+            return browser.findElement(By.xpath(contentxpath));
         }
 
-        public bool WaitUntilGridIsPopulatedWithRows(IWebDriver browser)
+        public Boolean WaitUntilGridIsPopulatedWithRows(WebDriver browser)
         {
-            WebDriverWait wait = new WebDriverWait(browser, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath("//tbody/tr")));
+            WebDriverWait wait = new WebDriverWait(browser, 30);
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//tbody/tr")));
 
             return true;
         }
     }
 
- 
-}

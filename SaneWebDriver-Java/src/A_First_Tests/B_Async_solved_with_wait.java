@@ -7,10 +7,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.core.Is.is;
-
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -31,11 +27,13 @@ import org.junit.jupiter.api.Test;
             WebElement grid = browser.findElement(By.id("grid"));
             assertNotNull(grid);
 
+            //WebDriverWait causes the test to pause until the rows in the grid
+            //  load, or the timeout of 30 seconds is reached.
             WebDriverWait wait = new WebDriverWait(browser, 30);
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
             List<WebElement> rows = browser.findElements(By.xpath("//tbody/tr"));
             
-            assertThat(rows.isEmpty(), is(false));
+            assertFalse(rows.isEmpty());
 
             browser.quit();
         }

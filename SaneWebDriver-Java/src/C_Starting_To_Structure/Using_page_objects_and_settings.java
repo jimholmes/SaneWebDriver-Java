@@ -1,65 +1,75 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿package C_Starting_To_Structure;
 
-namespace SaneWebDriver_CSharp.C_Starting_To_Structure
-{
-    [TestFixture]
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+/* TestInstance(Lifecycle.PER_CLASS) enables use of
+ *   @BeforeClass on non-static methods.
+ *   See discussion on how JUnit handles test class lifecycle at
+ *   https://stackoverflow.com/questions/1052577/why-must-junits-fixturesetup-be-static 
+ */
+    @TestInstance(Lifecycle.PER_CLASS)
     public class Using_page_objects_and_settings
     {
-        IWebDriver browser;
+        WebDriver browser;
         WebDriverWait wait;
 
-        [OneTimeSetUp]
+        @BeforeAll
         public void Setup()
         {
+        	System.setProperty("webdriver.gecko.driver", "libs/geckodriver");
             browser = new FirefoxDriver();
-            wait = new WebDriverWait(browser, TimeSpan.FromSeconds(30));
+            wait = new WebDriverWait(browser, 30);
 
-            browser.Navigate().GoToUrl(Settings.SITE_URL+"/KendoGrid.html");
+            browser.get(Settings.GRID_URL);
         }
 
-        [OneTimeTearDown]
+        @AfterAll
         public void Teardown()
         {
-            browser.Quit();
+            browser.quit();
         }
 
-        [Test]
+        @Test
         public void grid_shows_on_page()
         {
-            wait.Until(ExpectedConditions.ElementExists(By.Id(ContactGridPageObject.GRID_ID)));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id(ContactGridPageObject.GRID_ID)));
         }
 
        
-        [Test]
+        @Test
         public void create_button_is_on_page()
         {
-            wait.Until(ExpectedConditions.ElementExists(By.Id(ContactGridPageObject.CREATE_BTN_ID)));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id(ContactGridPageObject.CREATE_BTN_ID)));
 
         }
 
-        [Test]
+        @Test
         public void grid_is_populated()
         {
             ContactGridPageObject page = new ContactGridPageObject();
 
             //I'm not happy with this implementation right now. Need to rethink!
-            Assert.IsTrue(page.WaitUntilGridIsPopulatedWithRows(browser));
+            assertTrue(page.WaitUntilGridIsPopulatedWithRows(browser));
         }
 
-        [Test]
+        @Test
         public void check_jim_is_on_page()
         {
             ContactGridPageObject page = new ContactGridPageObject();
             page.WaitUntilGridIsPopulatedWithRows(browser);
-            Assert.IsNotNull(page.GetRowByRowTextContent(browser, "Holmes"));
+            assertNotNull(page.GetRowByRowTextContent(browser, "Holmes") );
         }
     }
-}
+

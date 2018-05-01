@@ -6,10 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.core.Is.is;
-
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -22,18 +18,22 @@ import org.junit.jupiter.api.Test;
         @Test
         public void grid_appears_on_page_and_has_rows()
         {
+        	System.setProperty("webdriver.gecko.driver", "libs/geckodriver");
+
             // ARRANGE
             WebDriver browser = new FirefoxDriver();
-            browser.get("http://demosite.com/KendoGrid.html");
-            //browser.Navigate().GoToUrl("http://jhdemos.azurewebsites.net/KendoGrid.html");
+            //browser.get("http://demosite.com/KendoGrid.html");
+            browser.get("http://jhdemos.azurewebsites.net/KendoGrid.html");
 
             // ACT
             WebElement grid = browser.findElement(By.id("grid"));
             // ASSERT
             assertNotNull(grid);
 
+            // This *WILL* fail because rows aren't yet loaded. See
+            //	next test for the solution.
             List<WebElement> rows = browser.findElements(By.xpath("//tbody/tr"));
-            assertThat(rows.isEmpty(), is(false));
+            assertFalse(rows.isEmpty());
 
             browser.quit();
         }
