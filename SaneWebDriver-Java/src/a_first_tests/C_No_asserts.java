@@ -1,4 +1,4 @@
-﻿package A_First_Tests;
+﻿package a_first_tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-﻿package B_Organizing_A_Test;
+﻿package b_organizing_a_test;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
