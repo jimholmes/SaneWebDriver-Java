@@ -1,4 +1,4 @@
-﻿package C_Starting_To_Structure;
+﻿package support;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

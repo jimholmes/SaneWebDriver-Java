@@ -1,4 +1,4 @@
-package C_Starting_To_Structure;
+package support;
 
 public class Settings {
 	

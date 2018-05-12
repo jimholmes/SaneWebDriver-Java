@@ -20,12 +20,16 @@ import org.junit.jupiter.api.Test;
 
             WebDriverWait wait = new WebDriverWait(browser, 30);
             
-            // Notice there are no asserts in this test. If either wait condition
-            //  fails (the grid doesn't appear, the rows don't load) an
-            //  Exception will be thrown, causing the test to fail.
-            // You don't *NEED* asserts to make a test; however, I *prefer*
-            //   to have them in there because it makes the test more explicit
-            //   and readable. I don't write my tests without asserts.
+            /* Note there are no Asserts! NUnit tests will pass and show green
+             *  as long as there are no Assert failures or exceptions.
+             *  This test will pass unless either wait.Until condition throws
+             *  an exception, meaning either the grid doesn't display or
+             *  rows don't populate.
+             *  
+             *  I don't particularly care for this style as it takes me a bit of
+             *  extra time to mentally unwind what's going on with the test.
+             *  I prefer an explicit "Assert" for readability.
+             */
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("grid")));
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr")));
 
