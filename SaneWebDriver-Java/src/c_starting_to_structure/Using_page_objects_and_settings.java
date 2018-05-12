@@ -1,4 +1,4 @@
-﻿package C_Starting_To_Structure;
+﻿package c_starting_to_structure;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -75,10 +75,10 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
         @Test
         public void grid_is_populated()
         {
-            ContactGridPageObject page = new ContactGridPageObject();
+            ContactGridPageObject page = new ContactGridPageObject(browser);
 
             //I'm not happy with this implementation right now. Need to rethink!
-            assertTrue(page.WaitUntilGridIsPopulatedWithRows(browser));
+            assertTrue(page.waitUntilGridIsPopulatedWithRows(browser));
         }
 
         //This test totally depends on knowing the test data set -- "Jim"
@@ -87,9 +87,9 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
         @Test
         public void check_jim_is_on_page()
         {
-            ContactGridPageObject page = new ContactGridPageObject();
-            page.WaitUntilGridIsPopulatedWithRows(browser);
-            assertNotNull(page.GetRowByRowTextContent(browser, "Holmes") );
+            ContactGridPageObject page = new ContactGridPageObject(browser);
+            page.waitUntilGridIsPopulatedWithRows(browser);
+            assertNotNull(page.getRowByRowTextContent("Holmes") );
         }
     }
 
