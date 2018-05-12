@@ -1,11 +1,6 @@
 package support;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -30,22 +25,13 @@ public class ContactPopUpPageObject {
 	public WebElement UpdateButton;
 	private static String UPDATE_BTN_XPATH = "//a[contains(@class,'k-grid-update')]";
 
-	/*
-	 * KendoGrid's editor popup has an odd input which requires a tab or focus event
-	 * to actually update values on the grid. Each Property setter method calls
-	 * SetFocusToField which WebDriver's Actions to focus on a different field,
-	 * thereby causing KendoGrid to properly update.
-	 * 
-	 * This is the sort of stuff that comes from experience. And pain.
-	 */
 	public String getRegion() {
 		return region.getText();
 	}
 
 	public void setRegion(String region) {
 		this.region.sendKeys(region);
-		this.region.sendKeys(Keys.TAB);
-		//setFocusToField(company);
+		setFocusToField(company);
 	}
 
 	public String getCompany() {
@@ -54,20 +40,9 @@ public class ContactPopUpPageObject {
 
 	public void setCompany(String company) {
 		this.company.sendKeys(company);
-		
-		
-		//inputTextToFieldViaJS(COMPANY_NAME_TAG, company);
 		setFocusToField(region);
 	}
 
-	private void inputTextToFieldViaJS(String fieldNameAttribText, String text) {
-		JavascriptExecutor exec = (JavascriptExecutor)browser;
-		
-		String scriptText = "document.getElementsByName('" + fieldNameAttribText +
-				"')[0].value='"+text+"';";
-		exec.executeScript(scriptText);
-		
-	}
 
 	public String getLName() {
 		return lname.getText();
@@ -75,9 +50,7 @@ public class ContactPopUpPageObject {
 
 	public void setLName(String lname) {
 		this.lname.sendKeys(lname);		
-		this.lname.sendKeys(Keys.TAB);
-
-		//setFocusToField(fname);
+		setFocusToField(fname);
 	}
 
 	public String getFName() {
@@ -86,8 +59,7 @@ public class ContactPopUpPageObject {
 
 	public void setFName(String fname) {
 		this.fname.sendKeys(fname);
-		this.fname.sendKeys(Keys.TAB);
-		//setFocusToField(lname);
+		setFocusToField(lname);
 	}
 
 	public ContactPopUpPageObject(WebDriver browser) {
@@ -104,7 +76,14 @@ public class ContactPopUpPageObject {
 		UpdateButton = browser.findElement(By.xpath(UPDATE_BTN_XPATH));
 	}
 
-	// See comments above Setters in this class
+	/*
+	 * KendoGrid's editor popup has an odd input which requires a tab or focus event
+	 * to actually update values on the grid. Each Property setter method calls
+	 * SetFocusToField which WebDriver's Actions to focus on a different field,
+	 * thereby causing KendoGrid to properly update.
+	 * 
+	 * This is the sort of stuff that comes from experience. And pain.
+	 */
 	private void setFocusToField(WebElement field) {
 		new Actions(browser).moveToElement(field).click().build().perform();
 	}
